@@ -53,4 +53,4 @@ base:
         name: jaeger-access
         optional: true
 
-connectsTo: inventory-management-svc-intermediate
+connectsTo: solution-sandradopi
