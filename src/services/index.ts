@@ -6,6 +6,8 @@ export * from './task.api';
 export * from './stock-items.api';
 export * from './stock-items-mock.service';
 export * from './stock-items.service';
+export * from './from.api';
+export * from './from.service';
 
 import config from './ioc.config';
 
