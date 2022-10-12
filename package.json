@@ -40,6 +40,7 @@
     "express-pino-logger": "^6.0.0",
     "graphql": "^15.5.3",
     "jaeger-client": "^3.18.1",
+    "node-libcurl": "^2.3.4",
     "opentracing": "^0.14.5",
     "pino": "^6.13.2",
     "rxjs": "^7.3.0",

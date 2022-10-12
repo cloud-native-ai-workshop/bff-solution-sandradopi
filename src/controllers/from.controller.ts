@@ -3,6 +3,7 @@ import { FromService } from '../services';
 import { Inject } from 'typescript-ioc';
 import { POST, Path } from 'typescript-rest';
 import { HttpError } from 'typescript-rest/dist/server/model/errors';
+import { PredictionsModel } from 'src/models/result.model';
 
 
 class BadGateway extends HttpError {
@@ -18,7 +19,7 @@ export class FromController {
   service: FromService;
 
   @POST
-  async postFrom(): Promise<FromModel[]> {
+  async postFrom(): Promise<PredictionsModel[]> {
     console.log("SERVER BFF")
     try {
       return await this.service.postFrom();
