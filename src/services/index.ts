@@ -12,3 +12,4 @@ export * from './from.service';
 import config from './ioc.config';
 
 Container.configure(...config);
+export * from './inference.service';
