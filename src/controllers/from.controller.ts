@@ -19,7 +19,7 @@ export class FromController {
   service: FromService;
 
   @POST
-  async postFrom(): Promise<PredictionsModel[]> {
+  async postFrom(): Promise<String> {
     console.log("SERVER BFF")
     try {
       return await this.service.postFrom();

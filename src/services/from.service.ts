@@ -25,7 +25,7 @@ export class FromService implements FromApi {
         return this._logger.child('FromService');
     }
 
-    async postFrom(): Promise<PredictionsModel[]> {
+    async postFrom(): Promise<String> {
         console.log("SERVER JAVA")
         return new Promise((resolve, reject) => {
             var curlTest = require('node-libcurl').Curl;
@@ -53,7 +53,7 @@ export class FromService implements FromApi {
                 console.info("Total time taken: " + this.getInfo("TOTAL_TIME"));
 
                 this.close();
-                resolve(data);
+                resolve(data.toString());
             });
             curlTest.on("error", terminate);
 
