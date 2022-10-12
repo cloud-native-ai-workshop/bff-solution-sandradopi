@@ -19,10 +19,10 @@ export class FromController {
   service: FromService;
 
   @POST
-  async postFrom(): Promise<String> {
+  async postFrom(state): Promise<String> {
     console.log("SERVER BFF")
     try {
-      return await this.service.postFrom();
+      return await this.service.postFrom(state);
     } catch (err) {
       throw new BadGateway('There was an error');
     }

@@ -8,13 +8,5 @@ import { From } from '../schemas';
 
 @Resolver(of => From)
 export class FromResolver {
-    @Inject
-    service: FromService;
 
-    @Query(returns => [From])
-    async From(): Promise<String> {
-        return this.service.postFrom();
-    }
 }
-
-resolverManager.registerResolver(FromResolver);

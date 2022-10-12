@@ -25,43 +25,60 @@ export class FromService implements FromApi {
         return this._logger.child('FromService');
     }
 
-    async postFrom(): Promise<String> {
-        console.log("SERVER JAVA")
+    async postFrom(state): Promise<String> {
+        console.log("DATO ENVIADO")
         return new Promise((resolve, reject) => {
-            var curlTest = require('node-libcurl').Curl;
-            const querystring = require("querystring");
-            const { Curl } = require("node-libcurl");
-            const terminate = curlTest.close.bind(curlTest);
-
-            curlTest.setOpt(Curl.option.URL, "https://cpd-cpd-hackathon.cp4d-workshop-hackathon-o-0a90eebd1b04c36c8a65993d6a0c3f93-0000.eu-de.containers.appdomain.cloud/icp4d-api/v1/authorize");
-            curlTest.setOpt(Curl.option.POST, true);
-            curlTest.setOpt(
-                Curl.option.POSTFIELDS,
-                querystring.stringify({
-                    username: "aper",
-                    password: "soP73dPaUg",
-                })
-            );
-
-            curlTest.on("end", function (statusCode, data, headers) {
-                console.info("Status code " + statusCode);
-                console.info("***");
-                console.info("Our response: " + data);
-                console.info("***");
-                console.info("Length: " + data.length);
-                console.info("***");
-                console.info("Total time taken: " + this.getInfo("TOTAL_TIME"));
-
-                this.close();
-                resolve(data.toString());
+            var axios = require('axios');
+            var data = JSON.stringify({
+            "username": "aper",
+            "password": "soP73dPaUg"
             });
-            curlTest.on("error", terminate);
+            
+            var config = {
+            method: 'post',
+            url: 'https://cpd-cpd-hackathon.cp4d-workshop-hackathon-o-0a90eebd1b04c36c8a65993d6a0c3f93-0000.eu-de.containers.appdomain.cloud/icp4d-api/v1/authorize',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            data : data
+            };
+            
+            axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data.token));
+                let hour=  Number(state.starttime.split(':')[0])
+                console.log(hour);
+                console.log("Bearer " + response.data.token)
+                var axios = require('axios');
+                var data = JSON.stringify({
+                "input_data":[{"fields": ["hour","House overall","Solar","temperature","visibility","apparentTemperature","windSpeed","cloudCover","windBearing","precipProbability"],"values": [[hour,0.932833333,0.003483333,36.14,10,29.26,9.18,"cloudCover",282,0]]}]
+                });
+                console.log(data)
+                var config = {
+                method: 'post',
+                url: 'https://cpd-cpd-hackathon.cp4d-workshop-hackathon-o-0a90eebd1b04c36c8a65993d6a0c3f93-0000.eu-de.containers.appdomain.cloud/ml/v4/deployments/d9a77564-1233-4ddf-bd50-734b728f77e5/predictions?version=2022-10-12',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': "Bearer " + response.data.token
+                },
+                data : data
+                };
+                axios(config)
+                .then(function (response) {
+                    console.log("HOLA");
+                    console.log(JSON.stringify(response.data));
+                    resolve(response.data)
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    });
+            })
+            .catch(function (error) {
+            console.log(error);
+            });
+        }
 
-            curlTest.perform();
-           
-         
-        });
-    }
+    )}
 
     mapFroms(data: From[]): FromModel[] {
         return data.map(this.mapFrom);
