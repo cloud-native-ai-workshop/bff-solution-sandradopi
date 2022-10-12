@@ -20,7 +20,6 @@
     "tdd": "jest --watch",
     "prebuild": "npm run clean",
     "build": "tsc",
-    "postbuild": "npm run swagger",
     "swagger": "swaggerGen -c ./swagger.config.json",
     "prestart": "npm run build",
     "start": "npm run serve",
