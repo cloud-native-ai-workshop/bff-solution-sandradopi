@@ -1,6 +1,5 @@
 import { FromModel } from 'src/models/from.model';
-import { Field, Float, Int, ObjectType } from 'type-graphql';
-import { StockItemModel } from '../models';
+import { Field,  ObjectType } from 'type-graphql';
 
 @ObjectType()
 export class From implements FromModel {
